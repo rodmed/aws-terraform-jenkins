@@ -1,0 +1,10 @@
+sudo file -s /dev/xvdh #verificar se existe filesystem na partição
+
+sudo mkfs -t xfs /dev/xvdh #cria filesystem, usar ext4 seria melhor, melhor ainda com lvm
+
+#da acesso
+sudo chown -R ubuntu /data 
+
+#checa arquivo
+echo  'keep this file' >> /data/file.txt
+cat /data/file.txt
