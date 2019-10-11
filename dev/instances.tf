@@ -11,16 +11,14 @@ resource "aws_key_pair" "mykeypair" {
 resource "aws_instance" "jenkins-master" {
   ami           = "ami-09d933ac2cc113652" #TODO: tornar dinamico
   instance_type = var.INSTANCE_TYPE_MASTER
-  subnet_id     = "subnet-a8e5fcc0" #TODO: tornar dinamico
+  subnet_id     = "subnet-a8e5fcc0" #TODO: tornar dinamico "us-east-2a"
 
   #Default Security Group permitindo sh 
   #vpc_security_group_ids = [aws_security_group.allow-ssh.id]
 
   key_name  = aws_key_pair.mykeypair.key_name #TODO: tornar configuravel
-  user_data = <<EOF
-                echo 'hello'
-                EOF
-
+  user_data = "${file("scripts/setup_ebs.sh")}"
+  
   tags = {
     Name        = "jenkins-master"
     Environment = "dev"
